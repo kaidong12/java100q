@@ -1,5 +1,6 @@
 package patterns.behavioral.observer;
 
+// 具体观察者
 public class JobSeeker implements Observer{
 
 	private String name;

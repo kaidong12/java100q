@@ -1,9 +1,13 @@
 package patterns.creational.singleton;
 
 public class Singleton {
+	// 私有
 	private static Singleton instance;
+	
+	// 私有
 	private Singleton() {}
 	
+	// 公有
 	public static Singleton getInstance() {
 //		if (instance == null) {
 //			instance = new Singleton();

@@ -3,6 +3,7 @@ package patterns.behavioral.observer;
 import java.util.ArrayList;
 import java.util.List;
 
+// 具体可观察类
 public class EmploymentAgency implements Observerable{
 
 	private List<Observer> observers = new ArrayList<>();

@@ -1,5 +1,6 @@
 package patterns.creational.factorymethod;
 
+// 具体产品
 public class Developer implements Interviewer{
 	
 	@Override

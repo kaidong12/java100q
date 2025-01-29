@@ -1,5 +1,6 @@
 package patterns.behavioral.observer;
 
+// 被观察物（消息）
 public class JobPost {
 	private String title;
 	
