@@ -1,7 +1,7 @@
 package patterns.structural.decorator;
 
 // 具体组件（Concrete Component）
-public class SimpleCoffee implements Coffee{
+public class CoffeeSimple implements Coffee{
 	
 	@Override
 	public double getCost() {

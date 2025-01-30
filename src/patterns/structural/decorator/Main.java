@@ -12,7 +12,7 @@ package patterns.structural.decorator;
 // 客户端
 public class Main {
 	public static void main(String[] args) {
-		Coffee coffee = new SimpleCoffee();
+		Coffee coffee = new CoffeeSimple();
 		System.out.println(coffee.getDescription() + " $" + coffee.getCost());
 		
 		coffee = new DecoratorSugar(coffee);

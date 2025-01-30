@@ -1,10 +1,10 @@
 package patterns.structural.decorator;
 
 // 抽象装饰器（Decorator）
-public abstract class CoffeeDecorator implements Coffee{
+public abstract class DecoratorAbstract implements Coffee{
 	protected Coffee decoratedCoffee;
 	
-	public CoffeeDecorator(Coffee coffee) {
+	public DecoratorAbstract(Coffee coffee) {
 		this.decoratedCoffee = coffee;
 	}
 	

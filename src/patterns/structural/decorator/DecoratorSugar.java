@@ -1,7 +1,7 @@
 package patterns.structural.decorator;
 
 // 具体装饰器（Concrete Decorator）
-public class DecoratorSugar extends CoffeeDecorator{
+public class DecoratorSugar extends DecoratorAbstract{
 
 	public DecoratorSugar(Coffee coffee){
 		super(coffee);
