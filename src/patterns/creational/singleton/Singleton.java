@@ -4,7 +4,7 @@ public class Singleton {
 	// 私有
 	private static Singleton instance;
 	
-	// 私有
+	// 构造方法私有
 	private Singleton() {}
 	
 	// 公有

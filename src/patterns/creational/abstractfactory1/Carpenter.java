@@ -1,4 +1,4 @@
-package patterns.creational.abstractfactory;
+package patterns.creational.abstractfactory1;
 
 // 具体产品2
 public class Carpenter implements FittingExpert{

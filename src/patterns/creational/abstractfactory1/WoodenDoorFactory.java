@@ -1,4 +1,4 @@
-package patterns.creational.abstractfactory;
+package patterns.creational.abstractfactory1;
 
 // 具体工厂
 public class WoodenDoorFactory implements DoorFactory{

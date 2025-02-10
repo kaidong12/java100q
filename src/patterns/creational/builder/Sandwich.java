@@ -7,7 +7,8 @@ public class Sandwich {
 	private boolean lettuce;
 	private boolean tomato;
 	
-	// 没有无参构造函数
+	// 没有
+	// 无参构造函数
 	
 	// 只能通过SandwichBuilder传入参数
 	// 若参数数量发生变化，只需修改SandwichBuilder，而无需修改客户端代码
@@ -21,7 +22,7 @@ public class Sandwich {
 	
 	public String getDescription() {
 		return "Sandwich info: \nSize: " + size + (cheese ? ", has Cheese" : "")
-				+ (pepperoni ? ", has Peperoni" : "" ) 
+				+ (pepperoni ? ", has Peperoni" : "")
 				+ (lettuce ? ", has Lettuce" : "")
 				+ (tomato ? ", has Tomato" : "") + ".";
 	}
