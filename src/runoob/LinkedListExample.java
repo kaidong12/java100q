@@ -37,8 +37,8 @@ public class LinkedListExample {
 		for (String s : myLinkedList) {
 			System.out.println(s);
 		}
-		
-        System.out.println("=========================");
+
+		System.out.println("=========================");
 
 		// Create another ArrayList of Strings
 		ArrayList<String> myLinkedList2 = new ArrayList<>();
@@ -48,10 +48,10 @@ public class LinkedListExample {
 		myLinkedList2.add("banana2");
 		myLinkedList2.add("cherry2");
 
-		myLinkedList.addAll(1, myLinkedList2);
+		myLinkedList.addAll(0, myLinkedList2);
 
 		// Iterate over the ArrayList using a for-each loop
-		for (String s : myLinkedList2) {
+		for (String s : myLinkedList) {
 			System.out.println(s);
 		}
 
