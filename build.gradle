@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/central' }  
+    mavenCentral()
+}
+
+dependencies {
+	// 添加 RxJava 依赖
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+
+    // 如果需要 AndroidSchedulers，还需要添加 RxJava Android 绑定库
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    
+    implementation 'org.springframework:spring-web:5.3.22'  // 替换为所需的版本号
+    implementation 'org.springframework:spring-context:5.3.22'  // 替换为所需的版本号
+}
