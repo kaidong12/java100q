@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RxJavaExample2 {
+public class RxJavaExample_all {
 
 	public static void main(String[] args) {
 		System.out.println("===============justDemo===============");
@@ -16,6 +16,7 @@ public class RxJavaExample2 {
 		mapDemo();
 		System.out.println("===============flatMapDemo===============");
 		flatMapDemo();
+		flatMapDemo2();
 		System.out.println("===============flatMapIterableDemo===============");
 		flatMapIterableDemo();
 		System.out.println("===============filterDemo===============");
@@ -51,7 +52,12 @@ public class RxJavaExample2 {
 	// 然后将这些 Observable 的结果合并为一个单一的 Observable。
 	public static void flatMapDemo() {
 		Observable.just("Alice", "Bob", "Charlie").flatMap(name -> Observable.just(name.length())) // 将每个名字转换为长度
-				.subscribe(data -> System.out.println("Received: " + data));
+				.subscribe(data -> System.out.println("Received(flatMap): " + data));
+	}
+
+	public static void flatMapDemo2() {
+		Observable.just("Alice", "Bob", "Charlie").map(name -> Observable.just(name.length())) // 将每个名字转换为长度
+				.subscribe(data -> System.out.println("Received(map): " + data));
 	}
 
 	// flatMapIterable 是一个操作符

@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RxJavaExample3 {
+public class RxJavaExample2_flatmap {
 	public static void main(String[] args) {
 
 		/*
@@ -19,14 +19,13 @@ public class RxJavaExample3 {
 		 * 
 		 * flatMap 的核心在于它的“扁平化”能力，可以将嵌套的 Observable展开为一个单一的流。
 		 * 
-		 * flatMap 的核心功能之一就是将嵌套的 Observable（即 Observable<Observable<T>>）“扁平化”为一个单层的 Observable<T>。
-		 * 这种能力使得 flatMap 非常适合处理复杂的异步任务和数据流，尤其是当任务之间存在嵌套或依赖关系时。
+		 * flatMap 的核心功能之一就是将嵌套的 Observable（即 Observable<Observable<T>>）“扁平化”为一个单层的
+		 * Observable<T>。 这种能力使得 flatMap 非常适合处理复杂的异步任务和数据流，尤其是当任务之间存在嵌套或依赖关系时。
 		 * 
 		 * ===============flatMap 的扁平化能力===============
 		 * 
-		 * 假设你有一个 Observable，它发射的每个数据项本身也是一个 Observable，
-		 * 那么 flatMap 会将这些内部的 Observable 合并为一个单一的、扁平化的 Observable。
-		 * 这样，你就可以处理一个连续的数据流，而不是嵌套的数据流。
+		 * 假设你有一个 Observable，它发射的每个数据项本身也是一个 Observable， 那么 flatMap 会将这些内部的 Observable
+		 * 合并为一个单一的、扁平化的 Observable。 这样，你就可以处理一个连续的数据流，而不是嵌套的数据流。
 		 * 
 		 */
 
@@ -38,6 +37,17 @@ public class RxJavaExample3 {
 		demo3();
 		System.out.println("===============flatMapDemo4===============");
 		demo4();
+		System.out.println("===============concatMapDemo1===============");
+		demo5();
+		System.out.println("===============concatMapDemo2===============");
+		demo6();
+
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -60,15 +70,15 @@ public class RxJavaExample3 {
 	// 假设我们有一个 ApiService，可以异步获取数据，我们希望对每个数据项进行进一步处理。
 	private static void demo2() {
 		// 模拟从网络获取数据
-		Observable<List<String>> dataStream = Observable.fromCallable(() -> Arrays.asList("Data1", "Data2", "Data3"));
-//				.subscribeOn(Schedulers.io());
+		Observable<List<String>> dataStream = Observable.fromCallable(() -> Arrays.asList("Data1", "Data2", "Data3"))
+				.subscribeOn(Schedulers.io());
 
-		dataStream.map(dataList -> Observable.fromIterable(dataList)).map(data -> "Processed: " + data)
-				.subscribe(result -> System.out.println("map --> Received: " + result));
+		dataStream.map(dataList -> Observable.fromIterable(dataList)).map(data -> "Processed-demo2: " + data)
+				.subscribe(result -> System.out.println("map-demo2 --> Received: " + result));
 
 		// 使用 flatMap 处理每个数据项
 		dataStream.flatMap(dataList -> Observable.fromIterable(dataList)).map(data -> "Processed: " + data)
-				.subscribe(result -> System.out.println("flatMap --> Received: " + result));
+				.subscribe(result -> System.out.println("flatMap-demo2 --> Received: " + result));
 	}
 
 	// 处理嵌套的异步任务
@@ -79,23 +89,21 @@ public class RxJavaExample3 {
 			System.out.println("Fetching user ID...");
 			TimeUnit.SECONDS.sleep(1); // 模拟异步操作
 			return 123;
-		});
-		// .subscribeOn(Schedulers.io());
+		}).subscribeOn(Schedulers.io());
 
 		// 第二个异步任务：根据用户 ID 获取用户信息
 		userIdStream.flatMap(userId -> getUserInfo(userId))
-				.subscribe(userInfo -> System.out.println("Received User Info: " + userInfo));
+				.subscribe(userInfo -> System.out.println("Received User Info--demo3: " + userInfo));
 
 	}
 
 	// 模拟获取用户信息
 	static Observable<String> getUserInfo(int userId) {
 		return Observable.fromCallable(() -> {
-			System.out.println("Fetching user info for user ID: " + userId);
+			System.out.println("Fetching user info for user ID-demo3: " + userId);
 			TimeUnit.SECONDS.sleep(1); // 模拟异步操作
-			return "User Info for ID: " + userId;
-		});
-		// .subscribeOn(Schedulers.io());
+			return "User Info for ID-demo3: " + userId;
+		}).subscribeOn(Schedulers.io());
 	}
 
 	// 处理多个异步任务的结果
@@ -104,17 +112,58 @@ public class RxJavaExample3 {
 		// 创建一个包含多个异步任务的 Observable
 		Observable.just(1, 2, 3).flatMap(id -> fetchData(id)) // 每个 ID 对应一个异步任务
 				.toList() // 将所有结果合并为一个列表
-				.subscribe(results -> System.out.println("Received Results: " + results));
+				.subscribe(results -> System.out.println("Received Results-demo4: " + results));
 	}
 
 	// 模拟异步任务
 	static Observable<String> fetchData(int id) {
 		return Observable.fromCallable(() -> {
-			System.out.println("Fetching data for ID: " + id);
+			System.out.println("Fetching data for ID-demo4: " + id);
 			TimeUnit.SECONDS.sleep(1); // 模拟异步操作
-			return "Data for ID: " + id;
+			return "Data for ID-demo4: " + id;
+		}).subscribeOn(Schedulers.io());
+	}
+
+	/*
+	 * concatMap 是 RxJava 中的一个操作符，它的行为与 flatMap 类似，但处理数据流的方式有所不同。 concatMap 会将
+	 * Observable 发射的每个数据项转换为一个新的 Observable，然后按顺序将这些 Observable 的结果合并为一个单一的
+	 * Observable。
+	 * 
+	 * flatMap：将多个 Observable 的结果“扁平化”为一个单一的 Observable，但不会保证顺序。如果内部的 Observable
+	 * 发射数据的时间不同，它们的结果可能会交错出现。
+	 * 
+	 * concatMap：同样将多个 Observable 的结果合并为一个单一的 Observable，但会按顺序发射每个内部 Observable
+	 * 的结果，不会交错。
+	 * 
+	 */
+
+	// 示例 1：按顺序处理多个异步任务
+	// 假设我们有一个用户列表，每个用户对应一个异步任务，我们希望按顺序处理这些任务的结果。
+	private static void demo5() {
+		// 创建一个用户列表
+		Observable.just("Alice", "Bob", "Charlie").concatMap(name -> fetchData(name)) // 每个用户对应一个异步任务
+				.subscribeOn(Schedulers.io()) // 在 IO 线程中执行
+				.subscribe(result -> System.out.println("Received-demo5: " + result));
+	}
+
+	// 模拟异步任务
+	static Observable<String> fetchData(String name) {
+		return Observable.fromCallable(() -> {
+			System.out.println("Fetching data for-demo5: " + name);
+			TimeUnit.SECONDS.sleep(1); // 模拟网络延迟
+			return "Data for-demo5: " + name;
 		});
-		// .subscribeOn(Schedulers.io());
+	}
+
+	// 示例 2：按顺序处理多个数据流
+	// 假设我们有多个数据流，每个数据流包含多个数据项，我们希望按顺序处理这些数据流的结果。
+	private static void demo6() {
+		// 创建一个包含多个数据流的 Observable
+		Observable
+				.just(Observable.just("A1-demo6", "A2-demo6"), Observable.just("B1-demo6", "B2-demo6"),
+						Observable.just("C1-demo6", "C2-demo6"))
+				.concatMap(innerObservable -> innerObservable) // 按顺序处理每个数据流
+				.subscribe(System.out::println);
 	}
 
 	static class User {

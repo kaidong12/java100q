@@ -6,11 +6,30 @@ import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class RxJavaExample1 {
+public class RxJavaExample1_create {
 	public static void main(String[] args) {
+
+		// 创建Observable最原始形态
+		Observable.create(new ObservableOnSubscribe<Object>() {
+
+			@Override
+			public void subscribe(@NonNull ObservableEmitter<@NonNull Object> emitter) throws Throwable {
+				// 主动创建并发射事件
+				System.out.println("subscribe... " + Thread.currentThread());
+
+				emitter.onNext("aaa");
+				emitter.onNext("bbb");
+				emitter.onNext("ccc");
+				emitter.onComplete();
+
+			}
+		}).subscribe(observer2);
+
 		// 创建Observable
 		Observable<String> observable = Observable.create(emitter -> {
 			emitter.onNext("Hello");
@@ -20,32 +39,32 @@ public class RxJavaExample1 {
 		});
 
 		// 定义Observer
-		Observer<String> observer = new Observer<String>() {
+		Observer<String> observer1 = new Observer<String>() {
 			@Override
 			public void onSubscribe(Disposable d) {
-				System.out.println("Subscribed");
+				System.out.println("onSubscribe-1, Subscribed --> " + d.getClass());
 			}
 
 			@Override
 			public void onNext(String s) {
-				System.out.println("Received: " + s);
+				System.out.println("onNext-1, Received: " + s);
 			}
 
 			@Override
 			public void onError(Throwable e) {
-				System.out.println("Error: " + e.getMessage());
+				System.out.println("onError-1, Error: " + e.getMessage());
 			}
 
 			@Override
 			public void onComplete() {
-				System.out.println("Completed");
+				System.out.println("onComplete-1, Completed");
 			}
 		};
 
 		// 订阅
-		observable.subscribe(observer);
+		observable.subscribe(observer1);
 
-		Observable.just("1", "a", "xxx", "just1").subscribe(observer);
+		Observable.just("1", "a", "xxx", "just1").subscribe(observer1);
 		Observable.just(1, "a", "xxx", "just2").subscribe(observer2);
 		Observable.fromArray(1, "a", "xxx", "yyy", "nnn", "fromArray").subscribe(observer2);
 
@@ -65,26 +84,26 @@ public class RxJavaExample1 {
 		}).subscribe(observer2);
 	}
 
-	static Observer observer2 = new Observer<Object>() {
+	static Observer<Object> observer2 = new Observer<Object>() {
 
 		@Override
 		public void onSubscribe(@NonNull Disposable d) {
-			System.out.println("onSubscribe..." + d.toString());
+			System.out.println("onSubscribe-2 --> " + d.toString());
 		}
 
 		@Override
 		public void onNext(@NonNull Object t) {
-			System.out.println("onNext..." + t.toString());
+			System.out.println("onNext-2..." + t.toString());
 		}
 
 		@Override
 		public void onError(@NonNull Throwable e) {
-			System.out.println("onError..." + e.toString());
+			System.out.println("onError-2..." + e.toString());
 		}
 
 		@Override
 		public void onComplete() {
-			System.out.println("onComplete...");
+			System.out.println("onComplete-2...");
 		}
 	};
 }
