@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RxJavaExample_all {
@@ -13,10 +16,13 @@ public class RxJavaExample_all {
 		System.out.println("===============justDemo===============");
 		justDemo();
 		System.out.println("===============mapDemo===============");
-		mapDemo();
+		mapDemo1();
+		mapDemo2();
 		System.out.println("===============flatMapDemo===============");
-		flatMapDemo();
+		flatMapDemo1();
 		flatMapDemo2();
+		flatMapDemo3();
+		flatMapDemo4();
 		System.out.println("===============flatMapIterableDemo===============");
 		flatMapIterableDemo();
 		System.out.println("===============filterDemo===============");
@@ -42,20 +48,48 @@ public class RxJavaExample_all {
 
 	// map 是一个转换操作符
 	// 用于对 Observable 发射的每个数据项进行转换，返回一个新的数据项。
-	public static void mapDemo() {
+	public static void mapDemo1() {
 		Observable.just("Alice", "Bob", "Charlie").map(name -> name.toUpperCase()) // 将每个名字转换为大写
 				.subscribe(data -> System.out.println("Received: " + data));
 	}
 
+	public static void mapDemo2() {
+		Observable.just("Alice", "Bob", "Charlie").map(new Function<String, Object>() {
+			@Override
+			public @NonNull Object apply(@NonNull String t) throws Throwable {
+				return t.toLowerCase();
+			}
+
+		}) // 将每个名字转换为大写
+				.subscribe(data -> System.out.println("Received: " + data));
+	}
+
 	// flatMap 是一个强大的操作符
-	// 用于将 Observable 发射的每个数据项转换为一个新的 Observable
+	// 用于将 Observable 发射的每个数据项转换为一个新的 Observable --> 新的异步函数调用
 	// 然后将这些 Observable 的结果合并为一个单一的 Observable。
-	public static void flatMapDemo() {
+	public static void flatMapDemo1() {
 		Observable.just("Alice", "Bob", "Charlie").flatMap(name -> Observable.just(name.length())) // 将每个名字转换为长度
 				.subscribe(data -> System.out.println("Received(flatMap): " + data));
 	}
 
 	public static void flatMapDemo2() {
+		Observable.just("Alice", "Bob", "Charlie").flatMap(new Function<String, ObservableSource<?>>() {
+			@Override
+			public ObservableSource<?> apply(@NonNull String name) throws Throwable {
+				//	return name.length();
+				return Observable.just(name.length()); // 与map不同，此处创建了新的Observable
+			}
+
+		}) // 将每个名字转换为长度
+				.subscribe(data -> System.out.println("Received(flatMap): " + data));
+	}
+
+	public static void flatMapDemo3() {
+		Observable.just("Alice", "Bob", "Charlie").map(name -> name.length()) // 将每个名字转换为长度
+				.subscribe(data -> System.out.println("Received(map): " + data));
+	}
+
+	public static void flatMapDemo4() {
 		Observable.just("Alice", "Bob", "Charlie").map(name -> Observable.just(name.length())) // 将每个名字转换为长度
 				.subscribe(data -> System.out.println("Received(map): " + data));
 	}

@@ -2,7 +2,7 @@ package patterns.behavioral.command;
 
 /*
  * 命令模式（Command Pattern）是一种行为型设计模式
- * 它将请求封装为一个对象，从而使用户可用不同的请求对客户进行参数化。
+ * 它将操作(Command)封装为一个对象，从而使用户可用相同的方法调用(pressOnButton, pressOffButton)，不同的请求对象（light, fan），实现操作的参数化。
  * 命令模式允许将操作的执行与执行者解耦，使得操作可以在不同的时间、地点或上下文中执行。
  * 这种模式特别适合实现可撤销操作、事务处理、日志记录等功能。
  * 

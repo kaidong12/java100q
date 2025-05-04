@@ -24,8 +24,9 @@ public class RxJavaExample2_flatmap {
 		 * 
 		 * ===============flatMap 的扁平化能力===============
 		 * 
-		 * 假设你有一个 Observable，它发射的每个数据项本身也是一个 Observable， 那么 flatMap 会将这些内部的 Observable
-		 * 合并为一个单一的、扁平化的 Observable。 这样，你就可以处理一个连续的数据流，而不是嵌套的数据流。
+		 * 假设你有一个 Observable，它发射的每个数据项本身也是一个 Observable， 也即意味着它是一个异步函数调用。
+		 * 那么, flatMap 会将这些内部的 Observable 合并为一个单一的、扁平化的 Observable。 
+		 * 这样，你就可以处理一个连续的数据流，而不是嵌套的数据流。
 		 * 
 		 */
 
