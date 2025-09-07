@@ -17,3 +17,7 @@ dependencies {
     implementation 'org.springframework:spring-web:5.3.22'  // 替换为所需的版本号
     implementation 'org.springframework:spring-context:5.3.22'  // 替换为所需的版本号
 }
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

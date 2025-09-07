@@ -86,5 +86,14 @@ public class A01_DataType {
 		System.out.println("Long :" + l);
 		System.out.println("Short :" + sh);
 		System.out.println("String :" + str);
+
+		f = -10.11f;
+		System.out.println("Float :" + f);
+
+		byte b = (byte) 0xAC;          // -84
+		System.out.println(b);         // -84 （十进制字符串）
+		System.out.printf("%02X%n", b & 0xFF); // AC （无符号十六进制）
+		
+		System.out.print(2 << 3);
 	}
 }

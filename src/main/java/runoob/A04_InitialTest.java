@@ -1,5 +1,7 @@
 package runoob;
 
+import java.lang.reflect.Constructor;
+
 public class A04_InitialTest {
 	/*
 	 * 1）静态变量只会初始化（执行）一次。
@@ -10,11 +12,20 @@ public class A04_InitialTest {
 	 */
 	public static void main(String[] args) {
 		A ab = new B();
+		// output: ABab
 		ab = new B();
-		// output: ABabab
+		// output: ab
 
-		A abc = new B("abc");
-		abc = new B("abc");
+		A abc = new B("abc1");
+		// this is A: 
+		// Parent Constructor with value: abc1
+		// this is B:
+		// Child Constructor with value: abc1
+		abc = new B("abc2");
+		// this is A:
+		// Parent Constructor with value: abc2
+		// this is B:
+		// Child Constructor with value: abc2
 	}
 }
 

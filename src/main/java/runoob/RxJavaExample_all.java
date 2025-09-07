@@ -197,17 +197,17 @@ public class RxJavaExample_all {
 	//
 	// observeOn 指定 Observable 的下游任务在指定的调度器中执行。
 	// 它的作用范围是调用点之后的部分，可以多次调用以切换线程。
-	public static void observeOnDemo() {
-		// 创建一个 Observable，模拟耗时任务
-		Observable.just("Hello, RxJava!").map(data -> {
-			// 模拟耗时操作
-			Thread.sleep(2000);
-			return data.toUpperCase();
-		}).subscribeOn(Schedulers.io()) // 在 IO 线程中执行耗时任务
-				.observeOn(AndroidSchedulers.mainThread()) // 切换到主线程更新 UI
-				.subscribe(result -> tvResult.setText(result),
-						error -> tvResult.setText("Error: " + error.getMessage()));
-	}
+//	public static void observeOnDemo() {
+//		// 创建一个 Observable，模拟耗时任务
+//		Observable.just("Hello, RxJava!").map(data -> {
+//			// 模拟耗时操作
+//			Thread.sleep(2000);
+//			return data.toUpperCase();
+//		}).subscribeOn(Schedulers.io()) // 在 IO 线程中执行耗时任务
+//				.observeOn(AndroidSchedulers.mainThread()) // 切换到主线程更新 UI
+//				.subscribe(result -> tvResult.setText(result),
+//						error -> tvResult.setText("Error: " + error.getMessage()));
+//	}
 
 	static class User {
 		private String name;
